@@ -393,6 +393,9 @@ if __name__ == "__main__":
                     cond = False
                 else:
                     print("Not a valid command.")
+        print()
+        print("-"*10)
+        print()
         c = input(f"Do you want to change user(Y/N)? ").lower()
         if c == "y":
             cid = input("Enter new user customer id: ")
@@ -405,3 +408,6 @@ if __name__ == "__main__":
             newcust = RegularCustomer(cid, name, info, rhist)
             customer_data.append(newcust)
             print("Successfully registered new customer.")
+        print()
+        print("-"*10)
+        print()
