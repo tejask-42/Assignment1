@@ -8,8 +8,8 @@ bookings = []  # bookings data
 class Vehicle:
     def __init__(self, vehicle_id: str, make: str, model: str, year: int, rental_rate: float, availability: bool):
         self.vehicle_id = vehicle_id
-        self.make = make
-        self.model = model
+        self.make = make # eg Toyota
+        self.model = model # eg Camry
         if year < 1885:  # the first car was created in 1885
             raise ValueError("Invalid year of manufacture.")
         self.year = year
@@ -52,8 +52,8 @@ def return_vehicle(vehicle_id: str, data: list):
             vehicle.availability = False
             print(f"{vehicle.make} {vehicle.model} returned successfully.")
             vehicle.user = None  # No one is using the car after customer returns it
-            flag = True
-            break
+            flag = True # checks if matching vehicle is found
+            return
     if not flag:
         print("No such vehicle found in current database.")
 
@@ -75,7 +75,7 @@ def rent_vehicle(customer_id: str, rental_duration: int, make: str, model: str,
             for customer in customer_data:
                 if customer.customer_id == customer_id:
                     x = datetime.datetime.now()
-                    for booking in bookings:
+                    for booking in bookings: # checking if some pre booking is clashing with this rental
                         if booking.vehicle.vehicle_id == vehicle.vehicle_id and not booking.completed and (x + datetime.timedelta(minutes=rental_duration) > booking.req_time):
                             print(f"This {vehicle.vehicle_type} is already booked by someone during this time period.")
                             return
@@ -84,13 +84,13 @@ def rent_vehicle(customer_id: str, rental_duration: int, make: str, model: str,
                         customer.rental_history.append(
                             [vehicle, x, rental_duration / 0.9])  # reverting rental duration to original for logging
                     else:
-                        customer.rental_history.append(
+                        customer.rental_history.append( # no change if regular customer
                             [vehicle, x, rental_duration])
                     vehicle.user = customer
                     return  # assuming such a customer exists in customer database, so not checking for doesn't exist condition
             flag = True
             return
-    if not flag:
+    if not flag: # using flag for checking no errors encountered
         print("No such vehicle found in database.")
 
 
@@ -164,7 +164,7 @@ class PremiumCustomer(
         # this function will only be called if customer specifically does not want discount
 
 
-class RegularCustomer(Customer):
+class RegularCustomer(Customer): # initialise customer as regular customer and add function for using loyalty points for discount
     def __init__(self, *args):
         Customer.__init__(self, *args)
         self.loyalty_points = 0
@@ -262,7 +262,7 @@ def givebooking(bookings: list, data: list,
                 booking.completed = True
 
 
-# integrate search function into CLI but fix time control issue first
+
 def search(vehicles: list, criteria: list, sort_by="rental_ rate"):
     found = []
     if criteria[0] == "vehicle_type":
@@ -393,7 +393,7 @@ if __name__ == "__main__":
                     cond = False
                 else:
                     print("Not a valid command.")
-        print()
+        print() # for better readability
         print("-"*10)
         print()
         c = input(f"Do you want to change user(Y/N)? ").lower()
