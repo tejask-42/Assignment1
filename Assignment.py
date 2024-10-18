@@ -75,6 +75,10 @@ def rent_vehicle(customer_id: str, rental_duration: int, make: str, model: str,
             for customer in customer_data:
                 if customer.customer_id == customer_id:
                     x = datetime.datetime.now()
+                    for booking in bookings:
+                        if booking.vehicle.vehicle_id == vehicle.vehicle_id and not booking.completed and (x + datetime.timedelta(minutes=rental_duration) > booking.req_time):
+                            print(f"This {vehicle.vehicle_type} is already booked by someone during this time period.")
+                            return
                     if isinstance(customer, PremiumCustomer):
                         print("Thank you for being a premium customer!!")  # saying thanks when necessary
                         customer.rental_history.append(
@@ -83,9 +87,9 @@ def rent_vehicle(customer_id: str, rental_duration: int, make: str, model: str,
                         customer.rental_history.append(
                             [vehicle, x, rental_duration])
                     vehicle.user = customer
-                    break  # assuming such a customer exists in customer database, so not checking for doesn't exist condition
+                    return  # assuming such a customer exists in customer database, so not checking for doesn't exist condition
             flag = True
-            break
+            return
     if not flag:
         print("No such vehicle found in database.")
 
@@ -235,6 +239,8 @@ def book(customer_id: str, make: str, model: str, req_time, duration: int, booki
                     booking1 = Booking(customer, vehicle, req_time, duration)
                     bookings.append(booking1)
                     print(f"Your {vehicle.vehicle_type} has been booked successfully for {duration} days.")
+                    flag1 = True
+                    flag = True
             if not flag1:
                 print(f"No such {make} {model} found in database.")
                 return
@@ -249,7 +255,7 @@ def givebooking(bookings: list, data: list,
         if not booking.completed:
             if booking.req_time < x:  # if start time of booking already passed
                 print(f"Initialising rental for booking of {booking.customer.name}.")
-                rent_vehicle(booking.customer_id, booking.duration, booking.vehicle.make, booking.vehicle.model, data,
+                rent_vehicle(booking.customer.customer_id, booking.duration, booking.vehicle.make, booking.vehicle.model, data,
                              customer_data)
                 print(
                     f"A {booking.vehicle.make} {booking.vehicle.model} has been rented to {booking.customer.name} for {booking.duration} days.")
