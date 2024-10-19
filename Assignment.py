@@ -36,6 +36,7 @@ class Vehicle:
 vehicle1 = Vehicle(vehicle_id="V001", make="Toyota", model="Camry", year=2020, rental_rate=50.0, availability=True)
 vehicle2 = Vehicle(vehicle_id="V002", make="Tesla", model="Model S", year=2022, rental_rate=120.0, availability=True)
 vehicle3 = Vehicle(vehicle_id="V003", make="Ford", model="Mustang", year=2018, rental_rate=85.0, availability=True)
+vehicle6 = Vehicle(vehicle_id="V006", make="Ford", model="Mustang", year=2017, rental_rate=95.0, availability=True)
 vehicle4 = Vehicle(vehicle_id="V004", make="Honda", model="Civic", year=2019, rental_rate=40.0, availability=True)
 vehicle5 = Vehicle(vehicle_id="V005", make="Chevrolet", model="Tahoe", year=2021, rental_rate=95.0, availability=True)
 data.append(vehicle1)
@@ -43,6 +44,7 @@ data.append(vehicle2)
 data.append(vehicle3)
 data.append(vehicle4)
 data.append(vehicle5)
+data.append(vehicle6)
 
 
 def return_vehicle(vehicle_id: str, data: list):
