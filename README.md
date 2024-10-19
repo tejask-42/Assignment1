@@ -1,5 +1,7 @@
 Vehicle Rental Management System Project Report
+
 Overview
+
 This Python code implements a simple vehicle rental management system. It allows customers to rent, return, book, and search for vehicles. The system also handles customer registration, booking requests, and reminder functionality for vehicle rentals. Additionally, the system manages different types of vehicles, including luxury and regular vehicles, and supports both regular and premium customers.
 
 
